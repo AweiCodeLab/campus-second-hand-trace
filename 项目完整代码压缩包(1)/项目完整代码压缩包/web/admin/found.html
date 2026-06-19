@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> page</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/static/favicon.ico"> <link href="/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+
+<div class="middle-box text-center animated fadeInDown">
+    <h1>警告</h1>
+    <h3 class="font-bold">余额不足</h3>
+
+    <div class="error-desc">
+        您账户的余额为：{{.}} 元，请先充值！！
+        <a name="like" href="/admin/recharge">点击充值</a>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+<script>
+    $("#bu").click(function () {
+        var formdata = new FormData($('#signupForm')[0])
+        $.ajax({
+            type: "POST",   //Method of submission
+            url:"/admin/setMoney",
+            data: formdata,
+            async: false,
+            cache: false,
+            processData: false,
+            contentType: false,
+            error: function(request) {
+                alert("Connection error");
+            },
+            success: function(data) {  //success
+                alert(data);
+            }
+        });
+    });
+</script>
+
+
+
+</body>
+
+</html>

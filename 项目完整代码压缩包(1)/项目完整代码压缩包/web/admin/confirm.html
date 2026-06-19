@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/static/favicon.ico"> <link href="/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>二手物品列表</h5>
+                    <div class="ibox-tools">
+                        <a href="/admin/route?Name=add" class="btn btn-primary btn-xs">二手物品上传</a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="project-list">
+
+                        <table class="table table-hover">
+                            <tr>
+                                <th><a >二手物品编码</a></th>
+                                <th><a >二手物品名称</a></th>
+                                <th><a >二手物品所属方</a></th>
+                                <th></th>
+                                <th><a >操作</a></th>
+                            </tr>
+                            <tbody>
+                            {{- range $pd := .}}
+                                <tr>
+                                    <td class="project-title">
+                                        <small>编码</small>
+                                        <br>
+                                        <a name="like" href="/admin/detail?Name={{$pd.Id}}">{{$pd.FileHash}}</a>
+                                    </td>
+                                    <td class="project-title">
+                                        <a name="like">{{- $pd.Filename}}</a>
+                                        <br/>
+                                        <small>上传于 {{$pd.CreateDate}}</small>
+                                    </td>
+                                    <td class="project-title">
+                                        <a name="like">{{- $pd.Username}}</a>
+                                    </td>
+                                    <td class="project-people">
+                                    </td>
+                                    <td class="project-title">
+
+
+                                {{if eq $pd.Flag "未交易"}}
+                                        <a href="/admin/detail?Name={{$pd.Id}}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
+                                        <a href="/admin/detail?Name={{$pd.Id}}&Set=put" class="btn btn-white btn-sm"><i class="fa fa-hand-paper-o"></i> 发起交易 </a>
+                                {{else if eq $pd.Flag "已交易"}}
+                                    <a class="btn btn-white btn-sm"><i class="fa fa-eye"></i> 已交易 </a>
+                                {{else}}
+                                    <a href="/admin/detail?Name={{$pd.Id}}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 查看 </a>
+                                    <a href="javascript: alert('{{$pd.Flag}}')" class="btn btn-white btn-sm"><i class="fa fa-spinner"></i> 查看交易状态 </a>
+                                {{end}}
+                                        </td>
+                                </tr>
+                            {{end}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<!-- 自定义js -->
+<script src="/static/js/content.js?v=1.0.0"></script>
+
+
+<script>
+    $(document).ready(function(){
+
+        $('#loading-example-btn').click(function () {
+            btn = $(this);
+            simpleLoad(btn, true)
+            simpleLoad(btn, false)
+        });
+    });
+
+    function simpleLoad(btn, state) {
+        if (state) {
+            btn.children().addClass('fa-spin');
+            btn.contents().last().replaceWith(" Loading");
+        } else {
+            setTimeout(function () {
+                btn.children().removeClass('fa-spin');
+                btn.contents().last().replaceWith(" Refresh");
+            }, 2000);
+        }
+    }
+</script>
+
+
+
+</body>
+</html>

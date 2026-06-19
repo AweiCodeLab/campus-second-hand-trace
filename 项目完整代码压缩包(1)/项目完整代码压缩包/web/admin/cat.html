@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 信息查看</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+
+
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <p class="m-t">所有者可以查看二手物品
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5></h5>
+                </div>
+                <div class="ibox-content">
+                    <form enctype="multipart/form-data" class="form-horizontal m-t" id="signupForm">
+                        <input type = "hidden" id = "uid" name = "uid" value="{{.Id}}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">二手物品编码:</label>
+                            <div class="col-sm-8">
+                                <input id="cid" name="cid" class="form-control" type="text" readonly="readonly" value="{{.FileHash}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">二手物品名称:</label>
+                            <div class="col-sm-8">
+                                <input id="name" name="name" class="form-control" type="text" readonly="readonly" value="{{.Filename}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">二手物品简介:</label>
+                            <div class="col-sm-8">
+                                <textarea id="detail" name="detail" class="form-control" readonly="readonly" aria-required="true">{{.FileDetail}}</textarea>
+                            </div>
+                        </div>
+                        {{if eq .Flag "put"}}
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">二手物品价格:</label>
+                                <div class="col-sm-8">
+                                    <input id="money" name="money" class="form-control" type="text" placeholder="单位是“元”">
+                                </div>
+                            </div>
+                        {{end}}
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">二手物品附件:</label>
+                            <div class="col-sm-8">
+                                <a href="/admin/download?filename={{.FileHash}}&filepath={{.Filepath}}" ><button id="re" class="btn btn-primary" type="button">点击下载</button></a>
+                            </div>
+                        </div>
+                        {{if eq .Flag "put"}}
+                            <div class="form-group">
+                                <div class="col-sm-8 col-sm-offset-3">
+                                    <button id="bu" class="btn btn-primary" type="button">提交</button>
+                                </div>
+                            </div>
+                        {{end}}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 全局js -->
+<script src="/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- 自定义js -->
+<script src="/static/js/content.js?v=1.0.0"></script>
+
+<!-- jQuery Validation plugin javascript-->
+<script src="/static/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="/static/js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="/static/js/demo/form-validate-demo.js"></script>
+<script src="/static/js/plugins/layer/laydate/laydate.js"></script>
+<script>
+    $("#bu").click(function () {
+        var formdata = new FormData($('#signupForm')[0])
+        $.ajax({
+            type: "POST",   //Method of submission
+            url:"/admin/transfer",
+            data: formdata,
+            async: false,
+            cache: false,
+            processData: false,
+            contentType: false,
+            error: function(request) {
+                alert("Connection error");
+            },
+            success: function(data) {  //success
+                alert(data);
+            }
+        });
+    });
+</script>
+<script>
+
+    //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        min: laydate.now(), //Set the minimum date as the current date
+        max: '2099-06-16 23:59:59',
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            end.min = datas; //After the start date is selected, reset the minimum date of the end date
+            end.start = datas //Set the initial value of the end date as the start date
+        }
+    };
+    var end = {
+        elem: '#end',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        min: laydate.now(),
+        max: '2099-06-16 23:59:59',
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            start.max = datas;
+        }
+    };
+    laydate(start);
+    laydate(end);
+</script>
+
+
+
+</body>
+
+</html>

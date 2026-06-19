@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - List</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/static/favicon.ico"> <link href="/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="row m-b-sm m-t-sm">
+                        <div class="col-md-11">
+                            <form id="signupForm">
+                                <div class="input-group" >
+                                    <input type="text" id="money" name="money" placeholder="金额" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button id="bu" class="btn btn-primary dim" style="width: 90px;height: 29px;" type="button"><i class="fa fa-dollar"></i><i class="fa fa-dollar"></i></button></span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<!-- 自定义js -->
+<script src="/static/js/content.js?v=1.0.0"></script>
+ <script>
+        $("#bu").click(function () {
+            var formdata = new FormData($('#signupForm')[0])
+            $.ajax({  
+                    type: "POST",   //Method of submission
+                    url:"/admin/getMoney",
+                    data: formdata,
+                    async: false,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    error: function(request) {
+                         alert("Connection error");  
+                    },  
+                    success: function(data) {  //success
+                        alert(data);
+                    }  
+                 });
+               });
+    </script>
+
+<script>
+    $(document).ready(function(){
+
+        $('#loading-example-btn').click(function () {
+            btn = $(this);
+            simpleLoad(btn, true)
+            simpleLoad(btn, false)
+        });
+    });
+
+    function simpleLoad(btn, state) {
+        if (state) {
+            btn.children().addClass('fa-spin');
+            btn.contents().last().replaceWith(" Loading");
+        } else {
+            setTimeout(function () {
+                btn.children().removeClass('fa-spin');
+                btn.contents().last().replaceWith(" Refresh");
+            }, 2000);
+        }
+    }
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> Sign in</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="/static/favicon.ico"> <link href="/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style.css?v=4.1.0" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+</head>
+
+<body class="gray-bg">
+
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div>
+        <div>
+
+            <h1 class="logo-name">BC</h1>
+
+        </div>
+        <h3>欢迎来基于区块链的校园二手物品交易追溯系统</h3>
+
+        <form method="post" class="m-t" role="form" action="/admin/login">
+            <div class="form-group">
+                <input type="username" name="username" class="form-control" placeholder="账号（手机号）" required="">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="密码" required="">
+            </div>
+            {{if eq . 2}}
+            <a style="color: red">账号或者密码错误，请重新输入</a><br/><br/>
+            {{else if eq . 1}}
+            <script type="text/javascript">
+                window.location.href = '/admin/index';
+            </script>
+            {{end}}
+            <button type="submit" class="btn btn-primary block full-width m-b">登录</button>
+            <p class="text-muted text-center"> <a href="/admin/register.html">注册一个新的账号</a>
+            </p>
+
+        </form>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+
+</body>
+
+</html>

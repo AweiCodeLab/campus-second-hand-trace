@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 注册</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style.css?v=4.1.0" rel="stylesheet">
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+
+</head>
+
+<body class="gray-bg">
+
+<div class="middle-box text-center loginscreen   animated fadeInDown">
+    <div>
+        <div>
+
+            <h1 class="logo-name">BC</h1>
+
+        </div>
+        <h3>Welcome</h3>
+        <p>创建一个新的账号</p>
+        <form class="m-t" role="form" id="signupForm">
+            <div class="form-group">
+                <input name="username" type="text" class="form-control" placeholder="输入学号（账号）" required="">
+            </div>
+            <div class="form-group">
+                <input name="uname" type="text" class="form-control" placeholder="输入姓名" required="">
+            </div>
+            <div class="form-group">
+                <input name="card" type="text" class="form-control" placeholder="输入身份证" required="">
+            </div>
+            <div class="form-group">
+                <input name="name" id="name" type="password" class="form-control" placeholder="输入密码" required="">
+            </div>
+            <div class="form-group">
+                <input name="password" id="password" type="password" class="form-control" placeholder="再次输入密码" required="" onblur="checkpassword()">
+            </div>
+            <button id="bu" type="button" class="btn btn-primary block full-width m-b">注册</button>
+            <p class="text-muted text-center"><small>已经有账户？</small><a href="/admin/login">点击登录</a>
+            </p>
+
+        </form>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="/static/js/jquery.min.js?v=2.1.4"></script>
+<script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+<!-- iCheck -->
+<script src="/static/js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+</script>
+<script>
+    function checkpassword() {
+        var password = document.getElementById("name").value;
+        var repassword = document.getElementById("password").value;
+        if(password!=repassword){
+            alert("两次输入密码不一致！请重新输入！")
+            document.getElementById('p1').value = "";
+            document.getElementById('p2').value = "";
+        }
+    }
+</script>
+<script>
+
+    $("#bu").click(function () {
+        $.ajax({
+            type: "POST",   //提交的方法
+            url:"/admin/register", //提交的地址
+            data:$('#signupForm').serialize(),// 序列化表单值
+            async: false,
+            error: function(request) {  //失败的话
+                alert("Connection error");
+            },
+            success: function(data) {  //成功
+                alert(data);
+            }
+        });
+    });
+
+</script>
+
+
+
+
+</body>
+
+</html>
